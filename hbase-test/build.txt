@@ -1,0 +1,4 @@
+1.mvn package -DskipTests
+2.mvn eclipse:eclipse -DskipTests
+3.import into eclipse, Window -> Preferences -> Java -> Build Path -> Classpath Variables -> New: M2_REPO -> /$USER/.m2/repository
+
