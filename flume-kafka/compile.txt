@@ -1,0 +1,4 @@
+1.flume
+mvn install  -DskipTests -Dtar
+
+2.kafka

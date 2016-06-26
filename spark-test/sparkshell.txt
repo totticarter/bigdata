@@ -1,0 +1,14 @@
+val testfile= sc.textFile("/cloudb/test/syslog_50g.log")
+val count = testfile.flatMap(line => line.split(" ")).map(word =>(word, 1)).reduceByKey(_+_)
+val sort = count.sortByKey()
+sort.collect()
+
+1.sc.textFile("/cloudb/test/testfile.log").flatMap(line => line.split(" ")).map(word =>(word, 1)).reduceByKey(_+_).collect()
+2.sc.textFile("/cloudb/test/testfile.log").flatMap(line => line.split(" ")).map(word =>(word, 1)).sortByKey().collect()
+3.sc.textFile("/cloudb/test/testfile.log").flatMap(line => line.split(" ")).map(word =>(word, 1)).reduceByKey(_+_).sortByKey().collect()
+4.sc.textFile("/cloudb/test/testfile.log").flatMap(line => line.split(" ")).map(word =>(word, 1)).groupByKey(1).collect()
+
+
+5.sc.textFile("/cloudb/test/catalog_returns.dat").flatMap(line => line.split(" ")).map(word =>(word, 1)).groupByKey(20).take(10)
+6.sc.textFile("/cloudb/test/catalog_returns.dat").flatMap(line => line.split(" ")).map(word =>(word, 1)).reduceByKey(_+_).sortByKey().take(10)
+7.sc.textFile("/cloudb/test/testfile.log").flatMap(line => line.split(" ")).map(word =>(word, 1)).reduceByKey(_+_).map(p=>(p._2,p._1)).sortByKey().take(10)

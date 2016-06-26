@@ -1,0 +1,2 @@
+1.mvn clean package -Phadoop-2 -Pdist -DskipTests -Dtar
+  mvn eclipse:eclipse -DskipTests

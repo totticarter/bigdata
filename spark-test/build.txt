@@ -1,0 +1,23 @@
+1.build spark
+./make-distribution.sh --tgz -Phadoop-2.4 -Pyarn -Dhadoop.version=2.6.0 -DskipTests
+2.eclipse
+http://blog.csdn.net/yunlong34574/article/details/39214377
+mvn -Phadoop2 eclipse:clean eclipse:eclipse
+.classpath:  <classpathentry including="**/*.java|**/*.scala" kind="src" path="src/main/scala"/>
+3.ide
+eclipse: juno
+scala: 2.10 http://download.scala-ide.org/sdk/e38/scala210/stable/site/
+
+
+2.build tachyon
+mvn -Dhadoop.version=2.6.0 -DskipTests -X -U clean package
+conf:
+1) hadoop/etc/hadoop/core-site.xml
+<property>
+	<name>fs.tachyon.impl</name>
+	<value>tachyon.hadoop.TFS</value>
+</property>
+
+2) export TACHYON_MASTER_ADDRESS=tg-30
+   export TACHYON_UNDEREFS_ADDRESS=hdfs://tg-30:9000
+

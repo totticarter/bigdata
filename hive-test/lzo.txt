@@ -1,0 +1,50 @@
+sudo apt-get install lzop
+udo apt-get install zlib1g-dev
+wget http://www.oberhumer.com/opensource/lzo/download/lzo-2.06.tar.gz
+./configure --enable-shared && make && make install
+
+git clone https://github.com/twitter/hadoop-lzo.git
+<properties>  
+<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>  
+<hadoop.current.version>2.6.0</hadoop.current.version>  
+<hadoop.old.version>1.0.4</hadoop.old.version>  
+</properties>  
+mvn clean package -DskipTests
+
+1.hadoop-evn.sh
+  export LD_LIBRARY_PATH=/usr/local/lib
+2.core-site.xml
+<property>  
+	<name>io.compression.codecs</name>  
+	<value>org.apache.hadoop.io.compress.GzipCodec,  
+		org.apache.hadoop.io.compress.DefaultCodec,  
+		com.hadoop.compression.lzo.LzoCodec,  
+		com.hadoop.compression.lzo.LzopCodec,  
+		org.apache.hadoop.io.compress.BZip2Codec  
+	</value>  
+	</property>  
+	<property>  
+	<name>io.compression.codec.lzo.class</name>  
+	<value>com.hadoop.compression.lzo.LzoCodec</value>  
+</property> 
+
+3.mapred-site.xml
+<property>    
+<name>mapred.compress.map.output</name>    
+<value>true</value>    
+</property>    
+<property>    
+<name>mapred.map.output.compression.codec</name>    
+<value>com.hadoop.compression.lzo.LzoCodec</value>    
+</property>    
+<property>    
+<name>mapred.child.env</name>  
+<value>LD_LIBRARY_PATH=/usr/local/lib</value>    
+</property>   
+
+4.create table lzotb(name string,id int) row format delimited fields terminated by ' ' stored as INPUTFORMAT "com.hadoop.mapred.DeprecatedLzoTextInputFormat" outputformat "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat";
+
+5.load data local inpath 'test.data' into table lzotb;
+
+No LZO codec found, cannot run
+create table final_comp_tb_lzo row format delimited fields terminated by ' ' stored as inputformat "com.hadoop.mapred.DeprecatedLzoTextInputFormat" outputformat "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat" as select * from testtb1;

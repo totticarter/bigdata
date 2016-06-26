@@ -1,0 +1,20 @@
+1.build:
+mvn -Dhadoop.version=2.6.0 -DskipTests -X -U clean package
+
+2.local
+./bin/tachyon format
+./bin/tachyon-start.sh local
+./bin/tachyon runTests
+
+3.distributed
+conf:
+1) hadoop/etc/hadoop/core-site.xml
+<property>
+	<name>fs.tachyon.impl</name>
+	<value>tachyon.hadoop.TFS</value>
+</property>
+
+2) conf/tachyon-env.sh
+   export TACHYON_MASTER_ADDRESS=tg-30
+   export TACHYON_UNDEREFS_ADDRESS=hdfs://tg-30:9000
+

@@ -1,0 +1,4 @@
+build path configuration:
+1.hadoop-2.6.0/share/hadoop/tools/lib/commons-cli-1.2.jar
+2.hadoop-2.6.0/share/hadoop/common/hadoop-common-2.6.0.jar
+3.hadoop-2.6.0/share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.6.0.jar

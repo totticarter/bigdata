@@ -1,0 +1,78 @@
+1.aggregator
+1).createCombiner
+2).mergeValue
+3).mergeCombiner
+
+2.
+1)for reduceByKey:
+    with aggreator and map-side-combine
+    map side: aggreator.mergeValue to do map-size-combine
+    reduce side: aggreator.mergeCombiner to do reduce
+2)for groupByKey:
+    with aggreator but no map-size-combine(as said in code, map-side-combine cannot reduce data amount but bring huge old-gen object for jvm), aggreator.mergeCombiner is not needed because the records are not insert into any combiner
+    map side: 
+    reduce side: aggreator.mergeValue is used to reduce
+3)for sortByKey:
+    without aggreator
+    map side: records sort by partition-and-key
+    reduce side: merge the records with same key
+    
+3.map side
+ExternalSorter.insertAll:
+if(shouldCombine){ // for reduceByKey
+
+	use aggreator.createCombiner
+	use aggreator.mergeValue
+	map.changeValue
+	maybeSpillCollection(usingMap=true)
+}else if(bypassMergeSort){ //for operation no map-side-combine or sorting, such as groupby, because it has to serialize each data item twice
+			   // once when spilling to intermediate files, and then again when merging thess files object-by-object
+
+	spillToPartitionFiles
+}else{ //sortByKey
+
+	//stick values into buffer
+	maybeSpillCollection(usingMap=false)
+}
+
+maybeSpillCollection:
+if(usingMap){
+
+	maybeSpill(map);
+}else{
+
+	maybeSpill(buffer);
+}
+
+maybeSpill(collection: C):
+if(myMemoryThreshold <= currentMemory){
+
+	spill(collection)
+}	
+
+ExternalAppendOnlyMap::spill // for groupByKey, reduceByKey and aggreateByKey
+                             // sort the existing contents of the in-memory map and spill them to a tmp file
+ExternalSorter::spill // for sortByKey
+                      // spill the current in-memory collection to disk, adding a new file to spills. and clear it
+
+4.reduce side
+ShuffledRDD.compute()
+	shuffleManager.getReader(): HashShuffleReader.read()
+		//use aggreator and mapSideCombine to decide wheather to use aggregator.combineCombinerByKey or aggregator.combineValueByKey
+		if(dep.aggreator.isDefined){ // groupBy or reduceBy
+		
+			if(mapSideCombine) // reduceBy
+			new Iterator(aggregator.combineCombinerByKey)
+			else // groupBy
+			new Iterator(aggregator.combineValueByKey)
+		}else{
+
+			//Convert the Product2s to pairs since this is what downstream RDDs currently expect
+			???
+		}
+        
+         //sort the output if there is a sort ordering defined
+          context.taskMetrics.memoryBytesSpilled += sorter.memoryBytesSpilled
+	  context.taskMetrics.diskBytesSpilled += sorter.diskBytesSpilled
+
+https://issues.apache.org/jira/browse/SPARK-2044

@@ -1,0 +1,6 @@
+1.
+create table map_test(id string, perf map<string, int>) row format delimited field terminated by '\t' collection items terminated by ',' map keys terminated by ':';
+
+2.data
+1	job:80,team:60,person:70
+2	job:90,team:48,person:90

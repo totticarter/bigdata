@@ -1,0 +1,2 @@
+./bin/flume-ng agent -n producer -c conf -f conf/flume-conf.properties-kafka -Dflume.root.logger=INFO,console 
+./bin/flume-ng agent --conf conf  --conf-file conf/comsumer1.properties   --name consumer -Dflume.root.logger=INFO,console 

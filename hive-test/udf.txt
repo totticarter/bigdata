@@ -1,0 +1,21 @@
+eclipse project
+1.add external jar: hive-exec-1.2.1.jar
+
+2.code
+import org.apache.hadoop.hive.ql.exec.UDF;
+public class MyUDF extends UDF{
+
+	public String evaluate(){
+
+		return "hello world";
+	}
+}
+
+3.export jar
+
+4.add jar 'full path of jar'
+
+5.create temporary function hw as 'MyUDF';
+
+6.select hw();
+

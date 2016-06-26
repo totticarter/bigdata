@@ -1,0 +1,8 @@
+1.
+create table array_test(name string, std_id_list<int>) row format delimited fields terminated by ',' collection items terminated by ':';
+
+2.load data local inpath 'sql/array.sql.data' into table array_test;
+
+3.data
+034, 1:2:3:4
+035, 2:5:4:2

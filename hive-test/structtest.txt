@@ -1,0 +1,10 @@
+1.
+create table struct_test(id int, info struct<name:string, age:int>) row format delimited fields terminated by ',' collection items terminated by ':';
+2.
+load data local inpath 'sql/struct.sql.data' into table struct_test;
+
+3.
+1,liyong:30
+2,yangziying:28
+3,liyuqing:60
+4,qinfengyun:59

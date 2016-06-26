@@ -1,0 +1,7 @@
+./bin/tachyon tfs copyFromLocal
+./bin/tachyon tfs ls /
+
+start:
+./bin/tachyon-start.sh local
+./bin/tachyon-start.sh master NoMount
+./bin/tachyon-start.sh workers NoMount

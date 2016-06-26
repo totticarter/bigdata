@@ -1,0 +1,8 @@
+1.profile
+  mapreduce.task.profile=true
+  mapreduce.task.profile.maps=2
+  mapreduce.task.profile.reduces=2
+  mapreduce.task.profile.params=-agentlib:hprof=cpu=samples,heap=sites,force=n,thread=y,verbose=n,file=%s
+2.map or reduce task number
+  mapreduce.job.maps=0 
+  mapreduce.job.reduces=0 

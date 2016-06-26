@@ -1,0 +1,70 @@
+reference: 
+1.http://www.jianshu.com/p/59733597d448
+2.databricks-spark-reference-applications.pdf
+		
+
+
+1.run example
+1) nc -lk 9999
+2)./bin/run-example org.apache.spark.examples.streaming.NetworkWordCount localhost 9999
+3)type "aaa bbb aaa ccc bbb" in "nc terminal"
+
+2.spark shell
+1)nc -lk 9999
+2)import org.apache.spark.streaming._ 
+import org.apache.spark.streaming.StreamingContext._
+import org.apache.spark.api.java.function._
+import org.apache.spark.streaming._
+import org.apache.spark.streaming.api._
+
+2))read from network streaming and wordcount
+val ssc = new StreamingContext(sc, Seconds(1))
+val lines = ssc.socketTextStream("localhost", 9999)
+val words = lines.flatMap(_.split(" "))
+val pairs = words.map(word => (word, 1))
+val wordCounts = pairs.reduceByKey(_ + _)
+wordCounts.print()
+ssc.start()             
+ssc.awaitTermination() 
+
+3))read from hdfs and wordcount
+val ssc = new StreamingContext(sc, Seconds(1))
+val res = ssc.textFileStream("hdfs:/").flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_ + _).map(p => (p._2,p._1))
+res.print()
+ssc.start()             
+ssc.awaitTermination()  
+
+4))read from hdfs and wordcount and save as textfiles
+val ssc = new StreamingContext(sc, Seconds(1))
+val res = ssc.textFileStream("hdfs:/").flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKeyAndWindow((a:Int,b:Int) => (a + b), Seconds(3), Seconds(1)).map(p => (p._2,p._1))
+res.saveAsTextFiles("/home/liyong", "txt") //first time, you will see exception as "*** is not a file", second time, you can see the result on hdfs dir "/home/liyong/"
+ssc.start()             
+ssc.awaitTermination() 
+
+5))read from network and count
+val ssc = new StreamingContext(sc, Seconds(1))
+val lines = ssc.socketTextStream("localhost", 9999)
+val words = lines.flatMap(_.split(" ")).count().print()
+ssc.start()
+ssc.awaitTermination()
+
+6))read from hdfs and count
+val ssc = new StreamingContext(sc, Seconds(1))
+val res = ssc.textFileStream("hdfs:/").flatMap(line => line.split(" ")).count()
+res.print()
+ssc.start()             
+
+7))use updateStateByKey, but error exist
+val updateFunc = (values: Seq[Int], state: Option[Int]) => {
+	val currentCount = values.sum
+	val previousCount = state.getOrElse(0)
+      	Some(currentCount + previousCount)
+}
+val ssc = new StreamingContext(sc, Seconds(1))
+ssc.checkpoint("/data");
+val lines = ssc.socketTextStream("localhost", 9999)
+val wordStream = lines.flatMap(_.split(" ")).map(word => (word, 1))
+val stateDstream = wordStream.updateStateByKey(updateFunc)
+stateDstream.print()
+ssc.start()             
+ssc.awaitTermination()

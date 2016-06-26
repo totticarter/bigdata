@@ -1,0 +1,11 @@
+1.install gcc
+ install gcc-g++
+
+2.protobuf-2.5.0
+./confiure
+make && make install
+
+3.install ncurses-devel
+  install openssl-devel
+
+4.mvn package -Pdist,native -DskipTests -Dtar

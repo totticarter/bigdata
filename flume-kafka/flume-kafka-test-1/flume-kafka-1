@@ -1,0 +1,9 @@
+ 1.zookeeper and kafka
+ zookeeper-server-start.sh config/zookeeper.properties &
+  kafka-server-start.sh config/server.properties
+2.flume
+   ./bin/flume-ng agent -n producer --conf conf  --conf-file conf/producer1.properties -Dflume.root.logger=INFO,console
+   ./bin/flume-ng agent --conf conf  --conf-file conf/comsumer1.properties   --name consumer -Dflume.root.logger=INFO,console
+
+3.test
+    telnet localhost 44444

@@ -1,0 +1,10 @@
+1.JAVA_HOME not set
+  set JAVA_HOME at etc/hadoop/hadoop-env.sh
+
+2.ssh failed
+
+
+3.hadoop ssh: Could not resolve hostname
+  vim ~/.profile
+   export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+   export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"
