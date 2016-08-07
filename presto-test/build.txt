@@ -6,3 +6,6 @@
 2.import into ecliipse
   2.1 The eclipse version must latter than kepler 3.8.2 to support the java 1.8
   2.2 change the compiler to jdk 1.8
+  2.3 if reporting errors such as access restriction
+      Window -preferences - Java - Compiler - Errors/Warnings - Deprecated and restricted API 
+      change "Forbidden reference (access rules):" from error to warning
