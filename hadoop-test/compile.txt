@@ -9,3 +9,10 @@ make && make install
   install openssl-devel
 
 4.mvn package -Pdist,native -DskipTests -Dtar
+
+
+under mac:
+cd /Library/Java/JavaVirtualMachines/jdk1.7.0_55.jdk/Contents/Home/ 
+sudo mkdir Classes 
+cd Classes/ 
+sudo ln -s ../jre/lib/rt.jar classes.jar
