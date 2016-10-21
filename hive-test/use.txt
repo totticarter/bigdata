@@ -27,8 +27,8 @@
   or hive -e 'select * from testtb1'
 
 5.使用metastore
-5.1 启动hiveserver：hive --servece hiveserver2
-5.2 启动metastore：hive --service metastore
+5.1 启动hiveserver：hive --servece hiveserver2 启动在10000端口
+5.2 启动metastore：hive --service metastore 启动在9083端口
 5.3 使用beeline连接：
    beeline
    this will start a hive server at port 10000, then connect use beeline with jdbc:
