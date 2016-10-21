@@ -4,12 +4,12 @@
    if you want to use specific conf, then you should run:
     hive --config configdir
 
-or use a metastore
-1.install mysql-server
-a.foracom.mysql.jdbc.driverql-connector-java-5.1.28.jar
-  2.1 install libmysql-java
-  2.2 copy mysql-connector-java-5.1.28.jar to HIVE_HOME/lib
-3.mysql 
+
+2.install mysql-server
+2.1 foracom.mysql.jdbc.driverql-connector-java-5.1.28.jar
+  2.1.1 install libmysql-java
+  2.1.2 copy mysql-connector-java-5.1.28.jar to HIVE_HOME/lib
+2.2 mysql 
   3.1 mysql -uroot -p
   3.1 create database hivemeta;
       CREATE USER 'hive'@'localhost' IDENTIFIED BY 'hivepass';
@@ -26,10 +26,15 @@ a.foracom.mysql.jdbc.driverql-connector-java-5.1.28.jar
   select * from testtb1;
   or hive -e 'select * from testtb1'
 
-5.hive --servece hiveserver2 
-  this will start a hive server at port 10000, then connect use beeline with jdbc:
+5.使用metastore
+5.1 启动hiveserver：hive --servece hiveserver2
+5.2 启动metastore：hive --service metastore
+5.3 使用beeline连接：
+   beeline
+   this will start a hive server at port 10000, then connect use beeline with jdbc:
   beeline
-  !connect jdbc:hive2://localhost:10000 (username liyong; passwd huawei)
+  !connect jdbc:hive2://localhost:10000 (username 回车; passwd 回车)
+
 
 5.error:
   Caused by: java.net.URISyntaxException: Relative path in absolute URI: ${system:java.io.tmpdir%7D/$%7Bsystem:user.name%7D
@@ -46,15 +51,15 @@ a.foracom.mysql.jdbc.driverql-connector-java-5.1.28.jar
 	  <name>hive.scratch.dir.permission</name>
 	  <value>733</value>
 
-5.other user uses hive
+6.other user uses hive
   error:
  java.lang.RuntimeException(org.apache.hadoop.security.AccessControlException: org.apache.hadoop.security.AccessControlException: Permission denied: user=hadoop-user2, access=EXECUTE, inode="tmp":hadoop-user1:supergroup:rw-rw-rw-) 
 
  hadoop fs -chmod -R 700 /tmp/
   
 
-6.create external table if not exist etb1(id int, name string) row format delimited fields terminated by ' ' location '/';
-7.create external table if not exist etb1(name string) partitioned by (id) row format delimited fields terminated by ' ' location '/';
+7.create external table if not exist etb1(id int, name string) row format delimited fields terminated by ' ' location '/';
+8.create external table if not exist etb1(name string) partitioned by (id) row format delimited fields terminated by ' ' location '/';
    set mapreduce.job.queuename=markert;
    /**********************************************/
    set hive.exec.compress.intermediate=true;
