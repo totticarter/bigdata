@@ -1,0 +1,4 @@
+1.拷贝hive-site.xml到spark的conf目录下
+2.启动hive的metastore
+3.export SPARK_CLASSPATH=/Users/waixingren/software/spark/spark-1.6.2-bin-hadoop2.6/lib/mysql-connector-java-5.1.39-bin.jar
+4.启动sparksql：./bin/spark-sql --master spark://192.168.1.105:7077
