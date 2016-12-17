@@ -3,7 +3,15 @@
 2.eclipse
 http://blog.csdn.net/yunlong34574/article/details/39214377
 mvn -Phadoop2 eclipse:clean eclipse:eclipse
-.classpath:  <classpathentry including="**/*.java|**/*.scala" kind="src" path="src/main/scala"/>
+  error1: .classpath:  <classpathentry including="**/*.java|**/*.scala" kind="src" path="src/main/scala"/>
+  error2:
+  Scala IDE complains about ‘... is cross-compiled with an incompatible version of Scala ...’
+The Scala IDE tries to check if binary incompatible Scala libraries have been inadvertently mixed in a project’s classpath. It works by extracting, from the name of the jars, which major version of Scala it has been compiled against (assuming the Scala convention for publishing cross-compiled libraries, and further assuming that Scala minor releases are binary compatible). If the extracted Scala major version doesn’t match the one bundled with the Scala IDE, a problem is reported. This ad-hoc validation prevents one of the most common reason for compiler crashes and lack of intelligent behavior in the Scala IDE.
+
+If this check returns a false-negative, it can be disabled at the workspace level, or at the project level. The setting is withVersionClasspathValidator in the Scala → Compiler → Build Manager preference section.
+
+
+
 3.ide
 eclipse: juno
 scala: 2.10 http://download.scala-ide.org/sdk/e38/scala210/stable/site/
