@@ -11,9 +11,7 @@ The Scala IDE tries to check if binary incompatible Scala libraries have been in
 If this check returns a false-negative, it can be disabled at the workspace level, or at the project level. The setting is withVersionClasspathValidator in the Scala → Compiler → Build Manager preference section.
 error3:
 To do so right-click on the project and select Configure->Add Scala Nature.
-
-
-
+error4:如果在代码中还是有报找不到类的错误，需要手动添加缺失的jar包即可
 3.ide
 eclipse: juno
 scala: 2.10 http://download.scala-ide.org/sdk/e38/scala210/stable/site/
