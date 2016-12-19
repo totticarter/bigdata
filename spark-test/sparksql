@@ -1,8 +1,9 @@
-1.共享hive的元数据
+1.sqarksql shell
 1.1 拷贝hive-site.xml到spark的conf目录下
 1.2 启动hive的metastore
 1.3 export SPARK_CLASSPATH=/Users/waixingren/software/spark/spark-1.6.2-bin-hadoop2.6/lib/mysql-connector-java-5.1.39-bin.jar
+     或者在启动时制定：--jars lib/mysql-connector-java-5.1.39-bin.jar
 1.4 启动sparksql：./bin/spark-sql --master spark://192.168.1.105:7077
 
-2.不共享hive元数据
+2.spark-shell使用spark-sql
 2.1 启动spark-shell
