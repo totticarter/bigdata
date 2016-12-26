@@ -1,2 +1,4 @@
 1.mvn clean package -Phadoop-2 -Pdist -DskipTests -Dtar
-  mvn eclipse:eclipse -DskipTests
+2.导入eclipse
+mvn eclipse:eclipse -DdownloadSources -DdownloadJavadocs -Phadoop-2
+导入后直接可用，没有报错
