@@ -1,0 +1,13 @@
+1.sqarksql shell
+1.1 拷贝hive-site.xml到spark的conf目录下
+1.2 启动hive的metastore
+1.3 export SPARK_CLASSPATH=/Users/waixingren/software/spark/spark-1.6.2-bin-hadoop2.6/lib/mysql-connector-java-5.1.39-bin.jar
+     或者在启动时制定：--jars lib/mysql-connector-java-5.1.39-bin.jar
+1.4 启动sparksql：./bin/spark-sql --master spark://192.168.1.105:7077
+
+2.spark-shell使用spark-sql
+2.1 启动spark-shell
+
+3.remote debug
+
+java -cp /Users/waixingren/software/spark/spark-1.6.2-bin-hadoop2.6/conf/:/Users/waixingren/software/spark/spark-1.6.2-bin-hadoop2.6/lib/spark-assembly-1.6.2-hadoop2.6.0.jar:/Users/waixingren/software/spark/spark-1.6.2-bin-hadoop2.6/lib/datanucleus-api-jdo-3.2.6.jar:/Users/waixingren/software/spark/spark-1.6.2-bin-hadoop2.6/lib/datanucleus-core-3.2.10.jar:/Users/waixingren/software/spark/spark-1.6.2-bin-hadoop2.6/lib/datanucleus-rdbms-3.2.9.jar:/Users/waixingren/software/spark/spark-1.6.2-bin-hadoop2.6/lib/mysql-connector-java-5.1.39-bin.jar -Dscala.usejavacp=true -Xms1g -Xmx1g -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8888  org.apache.spark.deploy.SparkSubmit --master spark://localhost:7077 --class org.apache.spark.repl.Main --name Spark shell spark-shell
