@@ -1,0 +1,10 @@
+1.build lucene
+  1.1 ant 
+  1.2 eclipse
+     	在eclipse里为每个目录创建新工程，然后为工程添加依赖的工程，并且修改jre为1.7，即可消除大部分错误
+
+2.build solr
+  1.1 ant compile
+   会下载很多依赖，时间大概10分钟左右
+  1.2 ant eclipse
+   编译完后，直接在eclipse中导入solr的根目录，即可把相关代码全部导入，并且没有错误。solr包含了lucene源码。
